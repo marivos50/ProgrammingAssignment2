@@ -29,16 +29,16 @@ cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x' 
   m <- x$getsolve()
   
-  if(!is.null(m)) {
+  if(!is.null(m)) {              #we already have computed the inverse
     message("getting cached data")
-    return(m)
+    return(m)                    #returning the inverse from the cache
   }
   data <- x$get()
   d<-dim(data)[1]
-  I<-matrix(rep(1,d*d),nrow=d)
-  m <- solve(data, I)
+  I<-matrix(rep(1,d*d),nrow=d)   #creating an identity matrix of same size
+  m <- solve(data, I)            #computing the inverse
   
-  x$setsolve(m)
-  m
+  x$setsolve(m)                  #saving the inverse so we can use it later on
+  m                              #returning the inverse calculated
 }
 
