@@ -2,15 +2,14 @@
 # and there may be some benefit to caching the inverse of a matrix 
 # rather than compute it repeatedly (there are also alternatives to
 # matrix inversion that we will not discuss here). 
-
 # This function creates a special "matrix" object that can cache its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
   set <- function(y) {
-    x <<- y
-    m <<- NULL
-  }
+                x <<- y
+                m <<- NULL
+                }
   get <- function() x
   setsolve <- function(solve) m <<- solve
   getsolve <- function() m
@@ -27,16 +26,18 @@ makeCacheMatrix <- function(x = matrix()) {
 # then the cachesolve should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-  #rows=dim(x$get.x)[1]
-  #I<-matrix(rep(rows*rows, 1),nrow=rows)
+  ## Return a matrix that is the inverse of 'x' 
   m <- x$getsolve()
+  
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
   data <- x$get()
-  m <- solve(data, ...)
+  d<-dim(data)[1]
+  I<-matrix(rep(1,d*d),nrow=d)
+  m <- solve(data, I)
+  
   x$setsolve(m)
   m
 }
